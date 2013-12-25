@@ -22,7 +22,9 @@ type Config struct {
 type VeganRsp struct {
   ID string
   Location map[string]string
+  Languages []map[string]string
   Email string
+  Name string `json:"first_name"`
 }
 
 type Vegan struct {
@@ -30,6 +32,8 @@ type Vegan struct {
   Token string `gorethink:"token"`
   Location string `gorethink:"location"`
   Email string `gorethink:"email"`
+  Name string `gorethink:"name"`
+  Languages []string `gorethink:"languages"`
 }
 
 func main() {
@@ -52,7 +56,7 @@ func main() {
 
     RedirectURI: "http://saiko.luxhaven.com/oauth/facebook",
 
-    Scope: []string{"email", "user_location"},
+    Scope: []string{"email", "user_location", "user_likes"},
 
     ErrorCallback: func(w http.ResponseWriter, r *http.Request, err error) {
       http.Error(w, fmt.Sprintf("OAuth error - %v", err), 500)
@@ -68,7 +72,18 @@ func main() {
       body, _ := ioutil.ReadAll(rsp.Body)
       var veganRsp VeganRsp
       json.Unmarshal(body, &veganRsp)
-      vegan := Vegan{ID: veganRsp.ID, Token: token.Token, Email: veganRsp.Email, Location: veganRsp.Location["name"]}
+      languages := make([]string, len(veganRsp.Languages))
+      for i, language := range veganRsp.Languages {
+        languages[i] = language["name"]
+      }
+      vegan := Vegan{
+        ID: veganRsp.ID,
+        Token: token.Token,
+        Email: veganRsp.Email,
+        Location: veganRsp.Location["name"],
+        Name: veganRsp.Name,
+        Languages: languages,
+      }
       r.Table("vegans").Insert(vegan).RunWrite(sess)
       http.SetCookie(w, &http.Cookie{
         Name: "facebook_id",

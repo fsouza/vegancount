@@ -11,13 +11,13 @@ body {
   margin: 15px 25px;
 }
 
-a#add {
+#add {
   background-color: hsl(159, 69%, 44%);
   float: right;
   color: white;
   text-decoration: none;
   border-radius: 3px;
-  padding: 10px 20px;
+  padding: 10px 20px 9px 18px;
   font-size: 1.25em;
   margin: 28px;
   font-family: 'Varela Round';
