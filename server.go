@@ -3,10 +3,12 @@ package main
 import (
   "fmt"
   "log"
+  "time"
   "net/http"
   "io/ioutil"
   "encoding/json"
   "github.com/codegangsta/martini"
+  "github.com/codegangsta/martini-contrib/render"
   r "github.com/dancannon/gorethink"
   "github.com/andreadipersio/goauth-facebook/facebook"
   config "github.com/globocom/config"
@@ -56,7 +58,7 @@ func main() {
       http.Error(w, fmt.Sprintf("OAuth error - %v", err), 500)
     },
 
-    SuccessCallback: func(w http.ResponseWriter,  rq *http.Request, token *facebook.Token) {
+    SuccessCallback: func(w http.ResponseWriter, rq *http.Request, token *facebook.Token) {
       http.SetCookie(w, &http.Cookie{
         Name: "facebook_token",
         Value: token.Token,
@@ -68,14 +70,33 @@ func main() {
       json.Unmarshal(body, &veganRsp)
       vegan := Vegan{ID: veganRsp.ID, Token: token.Token, Email: veganRsp.Email, Location: veganRsp.Location["name"]}
       r.Table("vegans").Insert(vegan).RunWrite(sess)
+      http.SetCookie(w, &http.Cookie{
+        Name: "facebook_id",
+        Value: veganRsp.ID,
+        Expires: time.Now().Add(time.Hour*24),
+        MaxAge: 86400,
+        Path: "/",
+      })
       http.Redirect(w, rq, "/", http.StatusFound)
     },
   }
 
 
   m := martini.Classic()
-  m.Get("/", func() string {
-    return "Hello world!"
+  m.Use(render.Renderer())
+  m.Get("/", func(render render.Render, rq *http.Request) {
+    var count int
+    rsp, _ := r.Table("vegans").Count().RunRow(sess)
+    rsp.Scan(&count)
+    _, err := rq.Cookie("facebook_id")
+    if err != nil {
+      render.HTML(200, "index", map[string]interface{}{"cookie": false, "count": count})
+    } else {
+      //var vegan Vegan
+      //rsp, _ := r.Table("vegans").Get(cookie.Value).RunRow(sess)
+      //rsp.Scan(&vegan)
+      render.HTML(200, "index", map[string]interface{}{"cookie": true, "count": count})
+    }
   })
   m.Get("/oauth/facebook", fbHandler.ServeHTTP)
   m.Run()
