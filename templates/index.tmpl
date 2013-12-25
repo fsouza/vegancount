@@ -1,3 +1,6 @@
-count: {{.count}}
+{{if .cookie}}<a id='add' href='/oauth/facebook'>Add yourself to the count</a>{{end}}
 
-{{if .cookie}}{{else}}<a href='/oauth/facebook'>Connect to facebook</a>{{end}}
+<div id='count'>
+  Count:
+  <span>{{.count}}</span>
+</div>

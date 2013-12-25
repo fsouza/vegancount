@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  background: url(/assets/images/hold_my_hand.jpg) no-repeat;
+  background-size: cover;
+}
+
+#count {
+  font-family: 'Architects Daughter';
+  font-size: 4em;
+  color: white;
+  margin: 15px 25px;
+}
+
+a#add {
+  background-color: hsl(159, 69%, 44%);
+  float: right;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  font-size: 1.25em;
+  margin: 28px;
+  font-family: 'Varela Round';
+  text-transform: uppercase;
+}

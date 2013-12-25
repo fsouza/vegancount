@@ -83,7 +83,7 @@ func main() {
 
 
   m := martini.Classic()
-  m.Use(render.Renderer())
+  m.Use(render.Renderer(render.Options{Layout: "layout"}))
   m.Get("/", func(render render.Render, rq *http.Request) {
     var count int
     rsp, _ := r.Table("vegans").Count().RunRow(sess)
