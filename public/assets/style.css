@@ -4,6 +4,52 @@ body {
   background-size: cover;
 }
 
+nav {
+  font-family: 'Varela Round';
+  font-size: 1.75em;
+  color: hsl(159, 69%, 44%);
+  background-color: rgba(0,0,0,0.625);
+  padding: 8px 16px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+nav .title {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 100px;
+  text-transform: uppercase;
+  font-family: 'Architects Daughter';
+  font-size: 1.2em;
+}
+
+#nav { display: inline-block; float: right; }
+
+nav .nav {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 50px;
+  color: white;
+  font-size: 1.1em;
+  margin-top: 6px;
+}
+
+nav .nav:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#about {
+  font-family: 'Varela Round';
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  padding: 40px;
+  width: 300px;
+  margin: 50px auto;
+}
+
 #count {
   font-family: 'Architects Daughter';
   font-size: 4em;
@@ -22,4 +68,8 @@ body {
   margin: 28px;
   font-family: 'Varela Round';
   text-transform: uppercase;
+}
+
+#add:hover {
+  background-color: hsl(159, 69%, 46%);
 }

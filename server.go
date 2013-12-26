@@ -73,9 +73,7 @@ func main() {
       var veganRsp VeganRsp
       json.Unmarshal(body, &veganRsp)
       languages := make([]string, len(veganRsp.Languages))
-      for i, language := range veganRsp.Languages {
-        languages[i] = language["name"]
-      }
+      for i, language := range veganRsp.Languages { languages[i] = language["name"] }
       vegan := Vegan{
         ID: veganRsp.ID,
         Token: token.Token,
