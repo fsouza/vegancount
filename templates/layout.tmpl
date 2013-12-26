@@ -6,19 +6,35 @@
     <meta property='og:description' content='Vegan Census Count'>
     <meta property='og:url' content='http://vegancount.com'>
     <meta property='og:type' content='website'>
-
-    <link type='text/css' rel='stylesheet' href='/assets/style.css'>
+    <script src='http://code.jquery.com/jquery-2.0.3.min.js'></script>
+    <link type='text/css' rel='stylesheet' href='/assets/css/style.css'>
+    <link type='text/css' rel='stylesheet' href='/assets/css/typicons.min.css'>
     <link href='http://fonts.googleapis.com/css?family=Architects+Daughter|Varela+Round' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <nav>
       <div class='title'>Vegan Count</div>
       <div id='nav'>
-        <div class='nav'>What is this?</div>
-        <div class='nav'>Stats</div>
-        <div class='nav'>Map</div>
+        <div class='nav' nav='what'>What is this?</div>
+        <!--<div class='nav' nav='stats'>Stats</div>
+        <div class='nav' nav='map'>Map</div>-->
       </div>
     </nav>
     {{ yield }}
+    <div id='about' class='nav-content'>
+      <div class='typcn typcn-delete-outline'></div>
+      This is Vegan Count. Our goal is to perform a worldwide census of the vegan population and provide statistics with the information obtained. By having knowledge of the percentage of vegans in certain areas, activists can perform more effective outreach in the future.
+    </div>
+    
+    <script>
+      $('nav .nav[nav=what]').click(function(){
+        $('.nav-content').fadeOut()
+        $('.nav-content#about').fadeIn()
+      })
+
+      $('#about .typcn').click(function(){
+        $('#about').fadeOut()
+      })
+    </script>
   </body>
 </html>
