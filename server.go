@@ -54,7 +54,7 @@ func main() {
     Key: fb_id,
     Secret: fb_secret,
 
-    RedirectURI: "http://saiko.luxhaven.com/oauth/facebook",
+    RedirectURI: "http://www.vegancount.com/oauth/facebook",
 
     Scope: []string{"email", "user_location", "user_likes"},
 
