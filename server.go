@@ -11,7 +11,7 @@ import (
   "github.com/codegangsta/martini-contrib/render"
   r "github.com/dancannon/gorethink"
   "github.com/andreadipersio/goauth-facebook/facebook"
-  config "github.com/globocom/config"
+  "github.com/tsuru/config"
 )
 
 type Config struct {
